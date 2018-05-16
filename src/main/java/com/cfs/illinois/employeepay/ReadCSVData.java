@@ -1,12 +1,16 @@
 package com.cfs.illinois.employeepay;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord; 
 
 import java.io.*;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import java.nio.file.Files; 
+import java.nio.file.Paths; 
 
 public class ReadCSVData {
 
@@ -24,6 +28,7 @@ public class ReadCSVData {
         run();
     }
 
+    /*
     public void run(){
         Pattern pattern = Pattern.compile(",");
         try(BufferedReader in = new BufferedReader(new FileReader(file))){
@@ -42,6 +47,20 @@ public class ReadCSVData {
             e.printStackTrace();
         } catch (NumberFormatException e){
             e.printStackTrace();
+        }
+    } */
+    
+    public void run(){
+        try(Reader reader = Files.newBufferedReader(Paths.get(data.getPath())); 
+            CSVParser csvParser = new CSVReader(reader, CSVFormat.DEFAULT);
+        ){
+            for(CSVRecord record : csvParser){
+                employees.add(new Employee(record.get(4), record.get(2), 
+                                           record.get(3), record.get(5), 
+                                           record.get(6), record.get(7))); 
+            }
+        }catch(IOException e){
+            e.printStackTrace();    
         }
     }
 
