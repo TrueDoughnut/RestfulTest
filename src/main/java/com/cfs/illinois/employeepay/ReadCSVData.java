@@ -52,14 +52,17 @@ public class ReadCSVData {
     
     public void run(){
         try(Reader reader = Files.newBufferedReader(Paths.get(data.getPath())); 
-            CSVParser csvParser = new CSVReader(reader, CSVFormat.DEFAULT);
+            CSVParser csvParser = new CSVReader(reader, CSVFormat.DEFAULT
+                                                .withFirstRecordAsHeader()
+                                                .withIgnoreHeaderCase()
+                                                .withTrim();
         ){
             for(CSVRecord record : csvParser){
-                employees.add(new Employee(record.get(4), record.get(2), 
-                                           record.get(3), record.get(5), 
-                                           record.get(6), record.get(7))); 
+                employees.add(new Employee(record.get("Name"), record.get("Agency"),
+                                          record.get("Agency Division"), record.get("Position Title"),
+                                          record.get("Period Pay Rate"), record.get("YTD Gross"))); 
             }
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();    
         }
     }
