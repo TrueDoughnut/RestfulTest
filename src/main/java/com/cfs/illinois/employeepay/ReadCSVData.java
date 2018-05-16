@@ -12,7 +12,7 @@ public class ReadCSVData {
 
     public final File file;
     public List<Employee> employees;
-    public final File data = new File("data.json");
+    public final File data = new File("src\\main\\java\\com\\cfs\\illinois\\employeepay\\data.json");
 
     public ReadCSVData(File file){
         this.file = file;
