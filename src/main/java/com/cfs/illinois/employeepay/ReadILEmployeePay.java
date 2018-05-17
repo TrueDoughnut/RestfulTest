@@ -1,26 +1,23 @@
 package com.cfs.illinois.employeepay;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord; 
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.nio.file.Files; 
 import java.nio.file.Paths;
 
-public class ReadCSVData {
+public class ReadILEmployeePay {
 
     public final File file;
     public static List<Employee> employees;
-    public final File data = new File("src\\main\\java\\com\\cfs\\illinois\\employeepay\\data.json");
 
-    public ReadCSVData(String string){
+    public ReadILEmployeePay(String string){
         this.file = new File(string);
     }
     
@@ -38,10 +35,6 @@ public class ReadCSVData {
                         record.get("Period Pay Rate"), record.get("YTD Gross"));
                 employees.add(employee);
             }
-
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            mapper.writeValue(data, employees);
 
         } catch(IOException e){
             e.printStackTrace();    
