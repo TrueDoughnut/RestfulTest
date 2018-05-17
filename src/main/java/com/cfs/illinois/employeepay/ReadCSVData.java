@@ -1,16 +1,20 @@
 package com.cfs.illinois.employeepay;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord; 
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import java.nio.file.Files; 
-import java.nio.file.Paths; 
+import java.nio.file.Paths;
 
 public class ReadCSVData {
 
@@ -28,8 +32,7 @@ public class ReadCSVData {
         run();
     }
 
-    /*
-    public void run(){
+    /*public void run(){
         Pattern pattern = Pattern.compile(",");
         try(BufferedReader in = new BufferedReader(new FileReader(file))){
             employees = in.lines().skip(1).map(line -> {
@@ -48,20 +51,28 @@ public class ReadCSVData {
         } catch (NumberFormatException e){
             e.printStackTrace();
         }
-    } */
+    }*/
     
     public void run(){
-        try(Reader reader = Files.newBufferedReader(Paths.get(data.getPath())); 
-            CSVParser csvParser = new CSVReader(reader, CSVFormat.DEFAULT
+        employees = new ArrayList<>();
+        try(Reader reader = Files.newBufferedReader(Paths.get(file.getPath()));
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                                                 .withFirstRecordAsHeader()
                                                 .withIgnoreHeaderCase()
-                                                .withTrim();
+                                                .withTrim())
         ){
             for(CSVRecord record : csvParser){
-                employees.add(new Employee(record.get("Name"), record.get("Agency"),
-                                          record.get("Agency Division"), record.get("Position Title"),
-                                          record.get("Period Pay Rate"), record.get("YTD Gross"))); 
+                System.err.println(record.get("Employee Name"));
+                Employee employee = new Employee(record.get("Employee Name"), record.get("Agency"),
+                        record.get("Agency Division"), record.get("Position Title"),
+                        record.get("Period Pay Rate"), record.get("YTD Gross"));
+                employees.add(employee);
             }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.writeValue(data, employees);
+
         } catch(IOException e){
             e.printStackTrace();    
         }
@@ -69,6 +80,6 @@ public class ReadCSVData {
 
     public static void main(String[] args){
         ReadCSVData test = new ReadCSVData("data\\ILEmployeePay.csv");
-        System.err.println("\n" + test.employees.get(0).getName() + " " + test.employees.get(0).getPeriodPayRate());
+        //System.err.println("\n" + test.employees.get(0).getName() + " " + test.employees.get(0).getPeriodPayRate());
     }
 }
