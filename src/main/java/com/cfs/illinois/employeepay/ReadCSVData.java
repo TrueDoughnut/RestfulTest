@@ -80,6 +80,5 @@ public class ReadCSVData {
 
     public static void main(String[] args){
         ReadCSVData test = new ReadCSVData("data\\ILEmployeePay.csv");
-        //System.err.println("\n" + test.employees.get(0).getName() + " " + test.employees.get(0).getPeriodPayRate());
     }
 }
