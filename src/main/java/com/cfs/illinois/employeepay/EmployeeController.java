@@ -21,8 +21,25 @@ public class EmployeeController {
     public Object getEmployee(@RequestParam(value = "name") String name){
         int index = -1;
         for (int i = 0; i < ReadILEmployeePay.employees.size(); i++) {
-            if (ReadILEmployeePay.employees.get(i).getName().equalsIgnoreCase(name)) {
-                index = i;
+            String bothName = null;
+            String[] singleName = null;
+            if(name.indexOf(" ") == -1){
+                singleName = ReadILEmployeePay.employees.get(i).getName().split(" ");
+            } else {
+                bothName = ReadILEmployeePay.employees.get(i).getName();
+            }
+            if(bothName != null){
+                if(bothName.equalsIgnoreCase(name)){
+                    index = i;
+                    break;
+                }
+            } else if(singleName != null){
+                for(String s : singleName){
+                    if(s.equalsIgnoreCase(name)){
+                        index = i;
+                        break;
+                    }
+                }
             }
         }
         if (index >= 0) {

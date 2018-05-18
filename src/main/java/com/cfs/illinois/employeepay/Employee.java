@@ -1,6 +1,6 @@
 package com.cfs.illinois.employeepay;
 
-public class Employee implements Comparable{
+public class Employee{
 
     private String name;
     private String agency;
@@ -41,15 +41,5 @@ public class Employee implements Comparable{
 
     public String getYTDGross() {
         return YTDGross;
-    }
-
-
-    @Override
-    public int compareTo(Object o) {
-        if(o instanceof Employee){
-            return ((Employee) o).compareTo(this.getName());
-        } else {
-            return 0;
-        }
     }
 }
