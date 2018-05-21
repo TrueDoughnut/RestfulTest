@@ -1,7 +1,7 @@
 package com.cfs;
 
 import com.cfs.general.ReadCSV;
-import com.cfs.illinois.employeepay.EmployeeController;
+import com.cfs.controllers.EmployeeController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
