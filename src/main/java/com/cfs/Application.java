@@ -1,6 +1,7 @@
 package com.cfs;
 
-import com.cfs.illinois.employeepay.ReadILEmployeePay;
+import com.cfs.general.ReadCSV;
+import com.cfs.illinois.employeepay.EmployeeController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,8 +14,10 @@ public class Application {
     }
 
     public static void run(){
-        ReadILEmployeePay data = new ReadILEmployeePay("data\\ILEmployeePay.csv");
-        data.run();
+        EmployeeController employeeController = new EmployeeController();
+        ReadCSV readCSV = new ReadCSV("data\\ILEmployeePay.csv");
+        readCSV.run();
+        employeeController.list = readCSV.list;
     }
 
 }
